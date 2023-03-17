@@ -14,6 +14,7 @@
       loop: 
         - terminator-1.92-2.el8.noarch.rpm
         - terminator-2.1.1-1.el9.noarch.rpm
+      when: ansible_facts['distribution'] != "Fedora" 
 
     - name: Install Terminator for RHEL 8
       yum:
@@ -28,3 +29,9 @@
         state: present
         disable_gpg_check: yes
       when: ansible_facts['distribution_major_version'] == "9"
+
+    - name: Install Terminator for Fedora 
+      yum:
+        name: terminator
+        state: latest
+      when: ansible_facts['distribution'] == "Fedora"      

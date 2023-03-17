@@ -24,14 +24,14 @@
         content: options kvm_intel nested=1
         dest: /etc/modprobe.d/kvm.conf
         backup: true
-      when: "{{ ansible_facts['ansible_processor'] }}" contains Intel 
+      when: "{{ ansible_facts['ansible_processor'] }}" contains 'Intel'
 
     - name: Enable Nested Virtualization
       copy:
         content: options kvm_amd nested=1
         dest: /etc/modprobe.d/kvm.conf
         backup: true
-      when: "{{ ansible_facts['ansible_processor'] }}" contains AMD 
+      when: "{{ ansible_facts['ansible_processor'] }}" contains AMD
 
     - name: Set and Enable Libvirt Service
       systemd:
