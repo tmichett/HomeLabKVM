@@ -1,0 +1,33 @@
+# Playbook create and written by: Travis Michette
+# Contact information: tmichett@redhat.com
+# Designed and Written for Fedora
+---
+- name: Installation of SSHuttle
+  hosts: "{{ variable_host | default('localhost') }}"
+
+  tasks:
+
+    - name: Copy SSHuttle
+      copy:
+        src: ./files/sshuttle-1.0.4-1.el8.noarch.rpm
+        dest: /tmp/sshuttle-1.0.4-1.el8.noarch.rpm
+
+    - name: Install SSHuttle
+      yum:
+        name: /tmp/sshuttle-1.0.4-1.el8.noarch.rpm
+        state: present
+        disable_gpg_check: yes
+
+## Allow Tunnelling over SSH
+
+    - name: Setup SSHuttle Configuration - Allow Tunnel and TCP Forwarding in SSHD_Config
+      copy:
+        src: ./files/sshd_config
+        dest: /etc/ssh/sshd_config
+        backup: true
+        force: true
+
+    - name: Restart SSHD Config
+      systemd:
+        name: sshd
+        state: restarted

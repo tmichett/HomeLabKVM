@@ -1,0 +1,27 @@
+# Playbook create and written by: Travis Michette
+# Contact information: tmichett@redhat.com
+# Designed and Written for Fedora
+---
+- name: Installation of NoMachine
+  hosts: "{{ variable_host | default('localhost') }}"
+
+  tasks:
+
+    - name: Copy NoMachine
+      copy:
+        src: ./files/nomachine_7.10.1_1_x86_64.rpm
+        dest: /tmp/nomachine_7.10.1_1_x86_64.rpm
+
+    - name: Install NoMachine
+      yum:
+        name: /tmp/nomachine_7.10.1_1_x86_64.rpm
+        state: present
+        disable_gpg_check: yes
+
+    - name: Setup Firewall
+      firewalld:
+        port: 4000/tcp
+        state: enabled
+        zone: external
+        permanent: true
+        immediate: yes

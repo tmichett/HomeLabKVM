@@ -1,0 +1,23 @@
+# Playbook create and written by: Travis Michette
+# Contact information: tmichett@redhat.com
+# Designed and Written for Fedora
+---
+- name: Installation of Virt-Manager and Qemu Packages and Configure Networking
+  hosts: "{{ variable_host | default('localhost') }}"
+
+  tasks:
+
+
+    - name: Install Virtualization Pacakges
+      yum:
+        name: 
+          - virt-manager
+          - libvirt
+          - qemu
+          - libguestfs
+          -  bridge-utils
+        state: latest 
+
+
+
+

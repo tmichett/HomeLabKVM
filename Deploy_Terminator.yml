@@ -1,0 +1,30 @@
+# Playbook create and written by: Travis Michette
+# Contact information: tmichett@redhat.com
+# Designed and Written for Fedora
+---
+- name: Installation of Terminator
+  hosts: "{{ variable_host | default('localhost') }}"
+  gather_facts: yes
+  tasks:
+
+    - name: Copy Terminator 
+      copy:
+        src: "{{ item }}"
+        dest: /tmp/{{ item }}
+      loop: 
+        - terminator-1.92-2.el8.noarch.rpm
+        - terminator-2.1.1-1.el9.noarch.rpm
+
+    - name: Install Terminator for RHEL 8
+      yum:
+        name: /tmp/terminator-1.92-2.el8.noarch.rpm
+        state: present
+        disable_gpg_check: yes
+      when: ansible_facts['distribution_major_version'] == "8"      
+
+    - name: Install Terminator for RHEL 9
+      yum:
+        name: /tmp/terminator-2.1.1-1.el9.noarch.rpm
+        state: present
+        disable_gpg_check: yes
+      when: ansible_facts['distribution_major_version'] == "9"
