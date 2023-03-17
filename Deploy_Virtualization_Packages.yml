@@ -19,6 +19,12 @@
           -  bridge-utils
         state: latest 
 
+    - name: Enable Nested Virtualization
+      copy:
+        content: options kvm_intel nested=1
+        dest: /etc/modprobe.d/kvm.conf
+        backup: true 
+
     - name: Set and Enable Libvirt Service
       systemd:
         name: libvirtd
