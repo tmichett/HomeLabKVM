@@ -4,7 +4,8 @@
 ---
 - name: Installation of Virt-Manager and Qemu Packages and Configure Networking
   hosts: "{{ variable_host | default('localhost') }}"
-
+  var:
+    nic_name: enp0s31f6    # Replace with NIC Name in here or run with "-e nic_name=XXXX" on CLI
   tasks:
 
 
@@ -17,6 +18,18 @@
           - libguestfs
           -  bridge-utils
         state: latest 
+
+    - name: Set and Enable Libvirt Service
+      systemd:
+        name: libvirtd
+        state: started
+        enabled: true  
+
+    - name: Create Bridge for Virtual Networking
+      shell:  ip link add KVMbr0 type bridge
+    
+    - name: Attach NIC to Virtual Bridge 
+      shell: ip link set {{ nic_name }} master KVMbr0
 
 
 
