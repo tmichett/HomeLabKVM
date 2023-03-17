@@ -6,8 +6,8 @@
   hosts: "{{ variable_host | default('localhost') }}"
   var:
     nic_name: enp0s31f6    # Replace with NIC Name in here or run with "-e nic_name=XXXX" on CLI
+  gather_facts: true 
   tasks:
-
 
     - name: Install Virtualization Pacakges
       yum:
@@ -23,7 +23,15 @@
       copy:
         content: options kvm_intel nested=1
         dest: /etc/modprobe.d/kvm.conf
-        backup: true 
+        backup: true
+      when: "{{ ansible_facts['ansible_processor'] }}" contains Intel 
+
+    - name: Enable Nested Virtualization
+      copy:
+        content: options kvm_amd nested=1
+        dest: /etc/modprobe.d/kvm.conf
+        backup: true
+      when: "{{ ansible_facts['ansible_processor'] }}" contains AMD 
 
     - name: Set and Enable Libvirt Service
       systemd:
