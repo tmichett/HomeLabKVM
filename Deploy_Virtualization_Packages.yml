@@ -18,6 +18,7 @@
           - libguestfs
           -  bridge-utils
         state: latest 
+        become: true
 
     - name: Enable Nested Virtualization
       copy:
@@ -25,6 +26,7 @@
         dest: /etc/modprobe.d/kvm.conf
         backup: true
       when: "{{ ansible_facts['ansible_processor'] }}" contains 'Intel'
+      become: true
 
     - name: Enable Nested Virtualization
       copy:
@@ -32,18 +34,22 @@
         dest: /etc/modprobe.d/kvm.conf
         backup: true
       when: "{{ ansible_facts['ansible_processor'] }}" contains AMD
+      become: true
 
     - name: Set and Enable Libvirt Service
       systemd:
         name: libvirtd
         state: started
-        enabled: true  
+        enabled: true
+      become: true
 
     - name: Create Bridge for Virtual Networking
       shell:  ip link add KVMbr0 type bridge
+      become: true
     
     - name: Attach NIC to Virtual Bridge 
       shell: ip link set {{ nic_name }} master KVMbr0
+      become: true
 
 
 

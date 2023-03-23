@@ -24,12 +24,14 @@
       yum:
         name: gnome-tweaks
         state: present
+      become: true
 
     - name: Install Gnome-Shell Packages for RHEL 9
       yum:
         name: "{{ rh9pkgs }}"
         state: present
       when: ansible_facts['distribution_major_version'] == "9"
+      become: true
 
 - name: Gnome-Tweaks Settings
   hosts: "{{ variable_host | default('localhost') }}"

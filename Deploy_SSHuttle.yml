@@ -17,6 +17,7 @@
         name: /tmp/sshuttle-1.0.4-1.el8.noarch.rpm
         state: present
         disable_gpg_check: yes
+      become: true
 
 ## Allow Tunnelling over SSH
 
@@ -26,8 +27,10 @@
         dest: /etc/ssh/sshd_config
         backup: true
         force: true
+      become: true
 
     - name: Restart SSHD Config
       systemd:
         name: sshd
         state: restarted
+      become: true

@@ -17,6 +17,7 @@
         name: /tmp/nomachine_7.10.1_1_x86_64.rpm
         state: present
         disable_gpg_check: yes
+      become: true
 
     - name: Setup Firewall
       firewalld:
@@ -25,3 +26,4 @@
         zone: external
         permanent: true
         immediate: yes
+      become: true
