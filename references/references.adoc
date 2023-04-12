@@ -1,0 +1,5 @@
+* *How to enable nested virtualization in KVM*
+** https://docs.fedoraproject.org/en-US/quick-docs/using-nested-virtualization-in-kvm/
+
+* *Saving Git Credentials*
+** https://stackoverflow.com/questions/35942754/how-can-i-save-username-and-password-in-git
