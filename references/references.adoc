@@ -3,3 +3,8 @@
 
 * *Saving Git Credentials*
 ** https://stackoverflow.com/questions/35942754/how-can-i-save-username-and-password-in-git
+
+* *OpenShift Local*
+** https://developers.redhat.com/openshift/local-openshift-macos
+
+
