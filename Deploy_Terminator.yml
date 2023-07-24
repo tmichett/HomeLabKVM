@@ -1,6 +1,6 @@
 # Playbook create and written by: Travis Michette
 # Contact information: tmichett@redhat.com
-# Designed and Written for Fedora
+# Designed and Written for Fedora and RHEL 9 
 ---
 - name: Installation of Terminator
   hosts: "{{ variable_host | default('localhost') }}"
